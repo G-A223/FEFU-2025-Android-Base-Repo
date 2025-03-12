@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FEFU 2025 Android Base repo</string>
+    <string name="count_clicks_string1">You clicked </string>
+    <string name="count_clicks_string2"> times!</string>
 </resources>
