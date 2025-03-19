@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="10sp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/circleColor"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/circle"/>
+
+    <TextView
+        android:id="@+id/langName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="5dp"
+        android:text="ProgLang"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%"
+        android:textSize="16sp" />
+
+</LinearLayout>

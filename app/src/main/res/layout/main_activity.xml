@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="2dp"
+        android:paddingTop="0dp"
+        android:layout_marginTop="20dp"
+        android:paddingVertical="10dp"
+        android:textSize="30sp"
+        android:background="@color/purple_200"
+        android:text="ADD"
+        android:textColor="@color/purple_700" />
+
+    <co.feip.fefu2025.FlexBoxLayout
+        android:id="@+id/flexBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+</LinearLayout>
