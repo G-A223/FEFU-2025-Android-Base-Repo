@@ -35,44 +35,4 @@ class ProgLangView @JvmOverloads constructor(
     fun setColor(color: Int) {
         circleColor.background.setTint(color)
     }
-
-
-    /*
-    private var langName: String? = ""
-    private var circleColor: Int = Color.BLACK
-    private var percentage: Float = 0.0F
-
-    private var binding: ProgLangBinding =
-        ProgLangBinding.inflate(LayoutInflater.from(context), this, false)
-
-
-    private var _langName: String = ""
-        get() = binding.langName.text.toString()
-        set(langName) {
-            _langName = name
-            binding.langName.text = _name
-        }
-
-    init {
-        addView(binding.root)
-        val typedArray = context.theme.obtainStyledAttributes(
-            attributeSet,
-            R.styleable.ProgLangView, 0, 0
-        )
-
-        val langName = typedArray.getString(R.styleable.ProgLangView_name)
-        val percentage = typedArray.getFloat(R.styleable.ProgLangView_percentage, 0.0F)
-        val circleColor = typedArray.getColor(R.styleable.ProgLangView_color, Color.BLACK)
-
-        this.langName = langName
-        this.circleColor = circleColor
-        this.percentage = percentage
-
-    }
-
-    fun setName(name: String){
-        binding.langName.text = name
-    }
-    */
-
 }
