@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/name_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Animefvfvdfvfvf"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ep_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:text="Эпизоды: "
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:gravity="start"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/year_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Год выхода: "
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:paddingBottom="2dp"
+                android:gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/rating_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:text="Рейтинг: "
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:gravity="end"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image_info"
+            android:layout_width="match_parent"
+            android:layout_height="550dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/anime5" />
+
+        <co.feip.fefu2025.FlexBoxLayout
+            android:id="@+id/genres_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </co.feip.fefu2025.FlexBoxLayout>
+
+        <TextView
+            android:id="@+id/descr_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="описание"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:paddingTop="10dp"/>
+    </LinearLayout>
+</ScrollView>

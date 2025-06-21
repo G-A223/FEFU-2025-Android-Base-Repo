@@ -1,47 +1,55 @@
 package co.feip.fefu2025
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import co.feip.fefu2025.ui.theme.FEFU2025AndroidBaseRepoTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            FEFU2025AndroidBaseRepoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "FEIP",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+        setContentView(R.layout.main_activity)
+
+        val flexBoxLayout = findViewById<FlexBoxLayout>(R.id.flexBox)
+
+        for (anime in Anime.animeList) {
+            val newCardView = AnimeCard(this).apply {
+                setName(anime.name)
+                setImage(anime.imageRes)
+                setRating(anime.rating)
+            }
+            flexBoxLayout.addView(newCardView)
+
+            val curGenres = anime.genres.take(4)
+
+            val genreLayout = newCardView.findViewById<LinearLayout>(R.id.genres)
+            genreLayout.removeAllViews()
+            val availableWidth = genreLayout.width - genreLayout.paddingLeft - genreLayout.paddingRight
+            var usedWidth = 0
+
+            genreLayout.post {
+                val cardWidth = genreLayout.width - genreLayout.paddingLeft - genreLayout.paddingRight
+                var curWidth = 0
+
+                for (genre in anime.genres) {
+                    val newGenre = GenreOnCard(this).apply {
+                        setName(genre)
+                        measure(
+                            View.MeasureSpec.UNSPECIFIED,
+                            View.MeasureSpec.UNSPECIFIED
+                        )
+                    }
+
+                    if (cardWidth >= newGenre.measuredWidth + curWidth) {
+                        curWidth += newGenre.measuredWidth
+                        genreLayout.addView(newGenre)
+                    } else {
+                        break
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FEFU2025AndroidBaseRepoTheme {
-        Greeting("Android")
-    }
-}
