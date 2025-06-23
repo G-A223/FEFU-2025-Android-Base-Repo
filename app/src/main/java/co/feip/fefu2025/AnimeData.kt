@@ -1,7 +1,5 @@
 package co.feip.fefu2025
 
-import co.feip.fefu2025.R
-
 object Anime {
     val animeList = listOf(
         AnimeData(
