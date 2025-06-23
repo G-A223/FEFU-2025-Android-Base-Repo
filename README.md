@@ -3,3 +3,4 @@
 ![Снимок экрана 2025-06-23 130207](https://github.com/user-attachments/assets/b4878abe-5da4-4edf-b17e-ef18411de322)
 ![Снимок экрана 2025-06-23 125741](https://github.com/user-attachments/assets/553b23ea-64df-45a3-84c3-66285b9aecbd)
 ![Снимок экрана 2025-06-23 125753](https://github.com/user-attachments/assets/bd34d3f9-1c64-436a-a2b2-08e498362455)
+![image](https://github.com/user-attachments/assets/583f0cf4-aa52-457d-90ff-9a4052a69840)
