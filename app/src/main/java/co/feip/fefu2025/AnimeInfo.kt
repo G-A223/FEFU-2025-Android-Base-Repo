@@ -120,7 +120,7 @@ fun AnimeInfo(
 
 @Composable
 fun AnimeGenreInfo(genre: String, modifier: Modifier) {
-    val genreColor = rememberGenreColor(genre)
+    val genreColor = genreColor(genre)
 
     Box(
         modifier = modifier
@@ -137,7 +137,7 @@ fun AnimeGenreInfo(genre: String, modifier: Modifier) {
 }
 
 @Composable
-fun rememberGenreColor(genre: String): Color {
+fun genreColor(genre: String): Color {
     val genreColorMap = mapOf(
         "Сёнен" to Color(0xFF2196F3),
         "Драма" to Color(0xFFFF4141),
