@@ -6,19 +6,38 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import co.feip.fefu2025.domain.entities.Anime
 import co.feip.fefu2025.domain.use_cases.GetAnimeListUseCase
+import kotlinx.coroutines.flow.StateFlow
 
 
 class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) : ViewModel() {
+    private val isLoading = MutableStateFlow(false)
+    val isLoading_public: StateFlow<Boolean> = isLoading
+
+    private val error = MutableStateFlow<String?>(null)
+    val error_public: StateFlow<String?> = error
 
     val animeList = MutableStateFlow<List<Anime>>(emptyList())
 
     init {
-        extractAnimeList()
+        loadAnimeList()
     }
 
-    private fun extractAnimeList() {
+    fun retry() {
+        loadAnimeList()
+    }
+
+    private fun loadAnimeList() {
         viewModelScope.launch {
-            animeList.value = getAnimeListUseCase()
+            isLoading.value = true
+            error.value = null
+
+            try {
+                animeList.value = getAnimeListUseCase()
+            } catch (e: Exception) {
+                error.value = "Ошибка загрузки: ${e.message ?: "Неизвестная ошибка"}"
+            } finally {
+                isLoading.value = false
+            }
         }
     }
 }

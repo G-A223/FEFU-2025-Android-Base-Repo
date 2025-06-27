@@ -5,7 +5,7 @@ import co.feip.fefu2025.domain.entities.Anime
 
 class GetAnimeUseCase(private val repository: AnimeRepository) {
 
-    operator fun invoke(id: Int): Anime? {
+    suspend operator fun invoke(id: Int): Anime? {
         return repository.getAnime(id)
     }
 }

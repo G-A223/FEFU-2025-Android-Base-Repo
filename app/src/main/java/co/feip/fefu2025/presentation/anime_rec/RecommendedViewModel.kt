@@ -1,19 +1,15 @@
-package co.feip.fefu2025.presentation.anime_info
+package co.feip.fefu2025.presentation.anime_list
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import co.feip.fefu2025.domain.entities.Anime
-import co.feip.fefu2025.domain.use_cases.GetAnimeUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
+import co.feip.fefu2025.domain.use_cases.GetAnimeListUseCase
 import kotlinx.coroutines.flow.StateFlow
 
 
-class AnimeInfoViewModel(
-    private val getAnimeUseCase: GetAnimeUseCase,
-    val id: Int
-) : ViewModel() {
+class RecommendedViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) : ViewModel() {
 
     private val isLoading = MutableStateFlow(false)
     val isLoading_public: StateFlow<Boolean> = isLoading
@@ -21,23 +17,27 @@ class AnimeInfoViewModel(
     private val error = MutableStateFlow<String?>(null)
     val error_public: StateFlow<String?> = error
 
-    val anime = mutableStateOf<Anime?>(null)
+    val animeList = MutableStateFlow<List<Anime>>(emptyList())
+
+    fun getWithoutSuspend(): List<Anime> {
+        return getAnimeListUseCase.getWithoutSuspend()
+    }
 
     init {
-        loadAnime()
+        loadAnimeList()
     }
 
     fun retry() {
-        loadAnime()
+        loadAnimeList()
     }
 
-    private fun loadAnime() {
+    private fun loadAnimeList() {
         viewModelScope.launch {
             isLoading.value = true
             error.value = null
 
             try {
-                anime.value = getAnimeUseCase(id)?.copy()
+                animeList.value = getAnimeListUseCase()
             } catch (e: Exception) {
                 error.value = "Ошибка загрузки: ${e.message ?: "Неизвестная ошибка"}"
             } finally {

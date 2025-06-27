@@ -3,12 +3,42 @@ package co.feip.fefu2025.data
 import co.feip.fefu2025.R
 import co.feip.fefu2025.domain.AnimeRepository
 import co.feip.fefu2025.domain.entities.Anime
+import kotlinx.coroutines.delay
+import java.io.IOException
 
 class AnimeRepositoryImpl: AnimeRepository {
+    suspend override fun getListOfAnime(): List<Anime> {
+        delay(3000)
 
-    override fun getListOfAnime(): List<Anime> = animeList
+        if (listOf(true, false).random()) {
+            throw IOException("Ошибка загрузки данных")
+        }
 
-    override fun getAnime(id: Int): Anime? = animeList.find { it.id == id }
+        return animeList
+    }
+
+    override fun getListOfAnimeWithoutSuspend(): List<Anime> = animeList
+
+    suspend override fun getAnime(id: Int): Anime? {
+        delay(1500)
+
+        if (listOf(true, false).random()) {
+            throw IOException("Ошибка загрузки данных")
+        }
+
+        return animeList.find { it.id == id }
+    }
+
+    override suspend fun searchAnime(query: String): List<Anime> {
+        delay(500)
+        if (listOf(true, false).random())
+            throw IOException("Ошибка поиска")
+
+        return animeList.filter { anime ->
+            anime.name.contains(query, ignoreCase = true) ||
+            anime.genres.any { it.contains(query, ignoreCase = true) }
+        }
+    }
 
     val animeList = listOf(
         Anime(
