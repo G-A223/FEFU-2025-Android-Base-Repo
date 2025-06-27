@@ -8,13 +8,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import co.feip.fefu2025.RecommendedScreen
+import co.feip.fefu2025.presentation.anime_rec.RecommendedScreen
 import co.feip.fefu2025.presentation.anime_info.AnimeInfoScreen
 import co.feip.fefu2025.dependency.ProvideAnimeInfoData
 import co.feip.fefu2025.dependency.ProvideAnimeListData
 import co.feip.fefu2025.presentation.anime_info.AnimeInfoViewModel
 import co.feip.fefu2025.presentation.anime_list.AnimeList
 import co.feip.fefu2025.presentation.anime_list.AnimeListViewModel
+import co.feip.fefu2025.presentation.anime_search.SearchScreen
 
 @Composable
 fun AppNavHost(
@@ -34,7 +35,8 @@ fun AppNavHost(
                 viewModel = viewModel,
                 onAnimeClick = { animeId ->
                     navHostController.navigate(Destination.AnimeInfo(animeId).route)
-                }
+                },
+                navController = navHostController
             )
         }
 
@@ -55,6 +57,26 @@ fun AppNavHost(
 
         composable(Destination.Recommended.route) {
             RecommendedScreen(
+                onBackClick = { navHostController.popBackStack() },
+                onAnimeClick = { animeId ->
+                    navHostController.navigate(Destination.AnimeInfo(animeId).route)
+                }
+            )
+        }
+
+        composable(
+            route = Destination.Search.route,
+            arguments = listOf(
+                navArgument("query") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) { backStackEntry ->
+            val query = backStackEntry.arguments?.getString("query") ?: ""
+
+            SearchScreen(
+                query = query,
                 onBackClick = { navHostController.popBackStack() },
                 onAnimeClick = { animeId ->
                     navHostController.navigate(Destination.AnimeInfo(animeId).route)

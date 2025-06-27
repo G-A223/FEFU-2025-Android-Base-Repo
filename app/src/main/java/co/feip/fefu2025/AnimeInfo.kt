@@ -35,9 +35,11 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import co.feip.fefu2025.dependency.ProvideAnimeListData
+import co.feip.fefu2025.dependency.ProvideRecommendedData
 import co.feip.fefu2025.navigation.Destination
 import co.feip.fefu2025.presentation.anime_info.AnimeInfoViewModel
 import co.feip.fefu2025.presentation.anime_list.AnimeListViewModel
+import co.feip.fefu2025.presentation.anime_list.RecommendedViewModel
 import co.feip.fefu2025.ui.theme.AnimeColors
 
 @Composable
@@ -170,12 +172,11 @@ fun AnimeRec(
     onAnimeClick: (Int) -> Unit,
     navController: NavHostController,
     ) {
-    val viewModel: AnimeListViewModel = viewModel(
-        factory = ProvideAnimeListData.provideAnimeListViewModel()
+    val viewModel: RecommendedViewModel = viewModel(
+        factory = ProvideRecommendedData.provideAnimeListViewModel()
     )
 
-    val animeData by viewModel.animeList.collectAsState()
-    val animeRecommended = remember { animeData.shuffled().take(10) }
+    val animeRecommended = remember { viewModel.getWithoutSuspend().shuffled().take(10)  }
 
     Column(modifier = Modifier
         .fillMaxSize()

@@ -1,10 +1,12 @@
 package co.feip.fefu2025.presentation.anime_info
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -13,11 +15,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import co.feip.fefu2025.AnimeInfo
 import co.feip.fefu2025.AnimeRec
+import co.feip.fefu2025.ErrorView
+import co.feip.fefu2025.LoadingView
 import co.feip.fefu2025.RatingChart
 import co.feip.fefu2025.navigation.Destination
 
@@ -40,7 +47,11 @@ fun AnimeInfoScreen(
         (100..1000).random(),
         (100..1000).random(),
     )
+
     val animeData = viewModel.anime.value
+    val isLoading by viewModel.isLoading_public.collectAsState()
+    val error by viewModel.error_public.collectAsState()
+
 
     Scaffold(
         topBar = {
@@ -49,7 +60,13 @@ fun AnimeInfoScreen(
                     containerColor = Color.LightGray,
                     titleContentColor = Color.Black,
                 ),
-                title = { Text(text = animeData?.name.toString()) },
+                title = {
+                    if (!isLoading || error == null) {
+                        Text("Загрузка...")
+                    } else {
+                        Text(text = animeData?.name.toString())
+                    }
+                },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
@@ -61,27 +78,36 @@ fun AnimeInfoScreen(
             )
         },
     ) { paddings ->
+        when {
+            isLoading -> LoadingView()
+            error != null -> ErrorView(
+                message = error!!,
+                onRetry = { }
+            )
 
-        LazyColumn(
-            Modifier
-                .fillMaxSize()
-                .padding((paddings))
-        ) {
-            item {
-                AnimeInfo(viewModel)
-            }
+            else -> {
+                LazyColumn(
+                    Modifier
+                        .fillMaxSize()
+                        .padding((paddings))
+                ) {
+                    item {
+                        AnimeInfo(viewModel)
+                    }
 
-            item {
-                RatingChart(votes)
-            }
+                    item {
+                        RatingChart(votes)
+                    }
 
-            item {
-                AnimeRec(
-                    onAnimeClick = {animeId ->
-                        navController.navigate(Destination.AnimeInfo(animeId).route)
-                    },
-                    navController = navController
-                )
+                    item {
+                        AnimeRec(
+                            onAnimeClick = { animeId ->
+                                navController.navigate(Destination.AnimeInfo(animeId).route)
+                            },
+                            navController = navController
+                        )
+                    }
+                }
             }
         }
     }

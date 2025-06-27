@@ -9,7 +9,8 @@ import co.feip.fefu2025.domain.use_cases.GetAnimeListUseCase
 import kotlinx.coroutines.flow.StateFlow
 
 
-class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) : ViewModel() {
+class RecommendedViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) : ViewModel() {
+
     private val isLoading = MutableStateFlow(false)
     val isLoading_public: StateFlow<Boolean> = isLoading
 
@@ -17,6 +18,10 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
     val error_public: StateFlow<String?> = error
 
     val animeList = MutableStateFlow<List<Anime>>(emptyList())
+
+    fun getWithoutSuspend(): List<Anime> {
+        return getAnimeListUseCase.getWithoutSuspend()
+    }
 
     init {
         loadAnimeList()

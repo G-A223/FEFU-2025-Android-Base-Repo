@@ -16,4 +16,8 @@ sealed class Destination(val route: String) {
     }
 
     data object Recommended : Destination("recommended")
+
+    data object Search : Destination("search?query={query}") {
+        fun createRoute(query: String) = "search?query=$query"
+    }
 }
