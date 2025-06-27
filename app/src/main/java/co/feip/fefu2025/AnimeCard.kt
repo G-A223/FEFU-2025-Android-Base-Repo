@@ -34,9 +34,11 @@ fun AnimeCard(
     imageRes: Int,
     rating: String,
     genres: List<String>,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
+        onClick = onClick,
         modifier = modifier
             .width(180.dp)
             .padding(4.dp),
@@ -133,6 +135,7 @@ fun AnimeCardPreview() {
             imageRes = R.drawable.anime10,
             rating = "9.8",
             genres = listOf("Драма", "Приключения", "Экшен"),
+            onClick = {},
             modifier = Modifier.padding(16.dp)
         )
     }

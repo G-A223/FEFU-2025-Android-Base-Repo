@@ -1,6 +1,7 @@
 package co.feip.fefu2025.domain.entities
 
 data class Anime(
+    val id: Int,
     val name: String,
     val imageRes: Int,
     val rating: String,

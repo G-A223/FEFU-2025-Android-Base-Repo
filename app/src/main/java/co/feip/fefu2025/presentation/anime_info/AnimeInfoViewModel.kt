@@ -21,7 +21,7 @@ class AnimeInfoViewModel(
 
     private fun extractAnime() {
         viewModelScope.launch {
-            anime.value = getAnimeUseCase(id)
+            anime.value = getAnimeUseCase(id)?.copy()
         }
     }
 }

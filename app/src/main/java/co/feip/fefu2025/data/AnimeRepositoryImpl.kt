@@ -8,10 +8,11 @@ class AnimeRepositoryImpl: AnimeRepository {
 
     override fun getListOfAnime(): List<Anime> = animeList
 
-    override fun getAnime(id: Int): Anime? = animeList[id]
+    override fun getAnime(id: Int): Anime? = animeList.find { it.id == id }
 
     val animeList = listOf(
         Anime(
+            1,
             "Форма голоса",
             R.drawable.anime1,
             "8.93",
@@ -29,6 +30,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             1
         ),
         Anime(
+            2,
             "Монстр",
             R.drawable.anime2,
             "8.88",
@@ -50,6 +52,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             74
         ),
         Anime(
+            3,
             "Психопаспорт",
             R.drawable.anime3,
             "8.33",
@@ -66,6 +69,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             22
         ),
         Anime(
+            4,
             "Эрго Прокси",
             R.drawable.anime4,
             "7.9",
@@ -78,6 +82,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             23
         ),
         Anime(
+            5,
             "Эксперименты Лэйн",
             R.drawable.anime5,
             "8.09",
@@ -92,6 +97,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             13
         ),
         Anime(
+            6,
             "Бугипоп никогда не смеётся",
             R.drawable.anime6,
             "7.15",
@@ -104,6 +110,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             12
         ),
         Anime(
+            7,
             "Идеальная грусть",
             R.drawable.anime7,
             "8.55",
@@ -119,6 +126,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             1
         ),
         Anime(
+            8,
             "Призрак в доспехах",
             R.drawable.anime8,
             "8.27",
@@ -133,6 +141,7 @@ class AnimeRepositoryImpl: AnimeRepository {
 
         ),
         Anime(
+            9,
             "Технолайз",
             R.drawable.anime9,
             "7.76",
@@ -151,6 +160,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             22
         ),
         Anime(
+            10,
             "Берсерк",
             R.drawable.anime10,
             "8.6",
@@ -167,6 +177,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             25
         ),
         Anime(
+            11,
             "Ковбой Бибоп",
             R.drawable.anime11,
             "8.75",
@@ -183,6 +194,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             26
         ),
         Anime(
+            12,
             "Самурай Чамплоу",
             R.drawable.anime12,
             "8.51",
@@ -198,6 +210,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             26
         ),
         Anime(
+            13,
             "Оглянись",
             R.drawable.anime13,
             "8.64",
@@ -215,6 +228,7 @@ class AnimeRepositoryImpl: AnimeRepository {
 
         ),
         Anime(
+            14,
             "Лиз и синяя птица",
             R.drawable.anime14,
             "8.22",
@@ -231,6 +245,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             1
         ),
         Anime(
+            15,
             "Нана",
             R.drawable.anime15,
             "8.32",
@@ -249,6 +264,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             47
         ),
         Anime(
+            16,
             "Сказ о четырёх с половиной татами",
             R.drawable.anime16,
             "8.55",
@@ -263,6 +279,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             11
         ),
         Anime(
+            17,
             "Фури-кури",
             R.drawable.anime17,
             "8.04",
@@ -275,6 +292,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             6
         ),
         Anime(
+            18,
             "Трапеция",
             R.drawable.anime18,
             "7.9",
@@ -288,6 +306,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             11
         ),
         Anime(
+            19,
             "Мелочи жизни",
             R.drawable.anime19,
             "8.47",
@@ -304,6 +323,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             26
         ),
         Anime(
+            20,
             "Мононокэ",
             R.drawable.anime20,
             "8.41",
@@ -320,6 +340,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             12
         ),
         Anime(
+            21,
             "Жозе, тигр и рыба",
             R.drawable.anime21,
             "8.38",
@@ -340,6 +361,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             1
         ),
         Anime(
+            22,
             "Девочка-волшебница Мадока★Волшебство",
             R.drawable.anime22,
             "8.37",
@@ -357,6 +379,7 @@ class AnimeRepositoryImpl: AnimeRepository {
 
         ),
         Anime(
+            23,
             "Великий притворщик",
             R.drawable.anime23,
             "8.2",
@@ -371,6 +394,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             23
         ),
         Anime(
+            24,
             "Парад смерти",
             R.drawable.anime24,
             "8.32",
@@ -387,6 +411,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             12
         ),
         Anime(
+            25,
             "В этом уголке мира",
             R.drawable.anime25,
             "8.22",
@@ -399,6 +424,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             1
         ),
         Anime(
+            26,
             "Дорохедоро",
             R.drawable.anime26,
             "8.05",
@@ -415,6 +441,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             12
         ),
         Anime(
+            27,
             "Цветы зла",
             R.drawable.anime27,
             "7.15",
@@ -432,6 +459,7 @@ class AnimeRepositoryImpl: AnimeRepository {
 
         ),
         Anime(
+            28,
             "Кэйон!",
             R.drawable.anime28,
             "7.86",
@@ -449,6 +477,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             13
         ),
         Anime(
+            29,
             "Райский поцелуй",
             R.drawable.anime29,
             "7.87",
@@ -463,6 +492,7 @@ class AnimeRepositoryImpl: AnimeRepository {
             12
         ),
         Anime(
+            30,
             "91 день",
             R.drawable.anime30,
             "7.83",

@@ -11,6 +11,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -28,29 +32,45 @@ import co.feip.fefu2025.AnimeCard
 import co.feip.fefu2025.R
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AnimeList(viewModel: AnimeListViewModel) {
+fun AnimeList(
+    viewModel: AnimeListViewModel,
+    onAnimeClick: (Int) -> Unit
+) {
     val animeData by viewModel.animeList.collectAsState()
     val rows = remember(animeData) {
         animeData.chunked(2)
     }
-
-    Column {
-        Search()
-
-        LazyColumn {
-            items(rows) { pair ->
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    pair.forEach { anime ->
-                        AnimeCard(
-                            name = anime.name,
-                            imageRes = anime.imageRes,
-                            rating = anime.rating,
-                            genres = anime.genres
-                        )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.LightGray,
+                    titleContentColor = Color.Black,
+                ),
+                title = {
+                    Search()
+                }
+            )
+        },
+    ) { paddings ->
+        Column (modifier = Modifier.padding(paddings)) {
+            LazyColumn {
+                items(rows) { pair ->
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        pair.forEach { anime ->
+                            AnimeCard(
+                                name = anime.name,
+                                imageRes = anime.imageRes,
+                                rating = anime.rating,
+                                genres = anime.genres,
+                                onClick = { onAnimeClick(anime.id) }
+                            )
+                        }
                     }
                 }
             }
@@ -83,6 +103,6 @@ fun Search() {
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(end = 10.dp)
     )
 }
