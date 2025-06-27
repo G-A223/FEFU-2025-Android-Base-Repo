@@ -27,6 +27,10 @@ class AnimeInfoViewModel(
         loadAnime()
     }
 
+    fun retry() {
+        loadAnime()
+    }
+
     private fun loadAnime() {
         viewModelScope.launch {
             isLoading.value = true

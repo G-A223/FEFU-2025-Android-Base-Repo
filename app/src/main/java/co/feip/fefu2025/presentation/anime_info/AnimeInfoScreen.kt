@@ -82,7 +82,7 @@ fun AnimeInfoScreen(
             isLoading -> LoadingView()
             error != null -> ErrorView(
                 message = error!!,
-                onRetry = { }
+                onRetry = { viewModel.retry() }
             )
 
             else -> {

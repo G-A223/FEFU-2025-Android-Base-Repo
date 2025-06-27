@@ -22,6 +22,10 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
         loadAnimeList()
     }
 
+    fun retry() {
+        loadAnimeList()
+    }
+
     private fun loadAnimeList() {
         viewModelScope.launch {
             isLoading.value = true
