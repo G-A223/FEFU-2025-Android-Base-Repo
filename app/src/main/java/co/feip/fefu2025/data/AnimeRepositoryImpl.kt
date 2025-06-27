@@ -8,7 +8,6 @@ class AnimeRepositoryImpl: AnimeRepository {
 
     override fun getListOfAnime(): List<Anime> = animeList
 
-//    override fun getAnime(id: Int): Anime? = animeList[id]
     override fun getAnime(id: Int): Anime? = animeList.find { it.id == id }
 
     val animeList = listOf(
