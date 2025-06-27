@@ -1,4 +1,4 @@
-package co.feip.fefu2025
+package co.feip.fefu2025.presentation.anime_info
 
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
@@ -22,24 +22,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Surface
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import co.feip.fefu2025.FlexBoxLayout
 import co.feip.fefu2025.ui.theme.AnimeColors
-import co.feip.fefu2025.ui.theme.FEFU2025AndroidBaseRepoTheme
-
 
 @Composable
 fun AnimeInfo(
-    name: String,
-    imageRes: Int,
-    rating: String,
-    year: String,
-    episodes: Int,
-    descr: String,
-    genres: List<String>,
+    viewModel: AnimeInfoViewModel,
     modifier: Modifier = Modifier
 ) {
+    val animeData = viewModel.anime.value
+
     Surface(
         modifier = modifier
             .fillMaxSize()
@@ -47,7 +41,7 @@ fun AnimeInfo(
     ) {
         Column {
             Text(
-                text = name,
+                text = animeData?.name ?: "name",
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
@@ -58,15 +52,15 @@ fun AnimeInfo(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Эпизоды: $episodes",
+                    text = "Эпизоды: ${animeData?.episodes}",
                     fontSize = 15.sp,
                 )
                 Text(
-                    text = "Год: $year",
+                    text = "Год: ${animeData?.year}",
                     fontSize = 15.sp,
                 )
                 Text(
-                    text = "Рейтинг: $rating",
+                    text = "Рейтинг: ${animeData?.rating}",
                     fontSize = 15.sp,
                 )
             }
@@ -77,7 +71,7 @@ fun AnimeInfo(
 
             ) {
                 Image(
-                    painter = painterResource(id = imageRes),
+                    painter = painterResource(id = animeData?.imageRes!!),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -93,7 +87,7 @@ fun AnimeInfo(
                             ViewGroup.LayoutParams.WRAP_CONTENT
                         )
 
-                        genres.forEach { genre ->
+                        animeData?.genres?.forEach { genre ->
                             addView(
                                 androidx.compose.ui.platform.ComposeView(context).apply {
                                     setContent {
@@ -111,7 +105,7 @@ fun AnimeInfo(
             )
 
             Text(
-                text = descr,
+                text = animeData?.description!!,
                 fontSize = 20.sp
             )
         }
@@ -156,22 +150,6 @@ fun genreColor(genre: String): Color {
         "Приключения" to Color(0xFF00B70C),
     )
     return genreColorMap[genre] ?: Color(0xFF9E9E9E)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AnimeInfoPreview() {
-    FEFU2025AndroidBaseRepoTheme {
-        AnimeInfo(
-            name = "Берсерк",
-            imageRes = R.drawable.anime10,
-            rating = "9.81",
-            year = "2005-2006 гг",
-            episodes = 24,
-            genres = listOf("Драма", "Приключения", "Экшен"),
-            descr = "descr descr descr descr descr descr descr descr descr descr descr descr descr descr descr descr sega sv eesdvbsg"
-            )
-    }
 }
 
 

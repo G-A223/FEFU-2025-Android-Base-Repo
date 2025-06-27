@@ -1,8 +1,17 @@
-package co.feip.fefu2025
+package co.feip.fefu2025.data
 
-object Anime {
+import co.feip.fefu2025.R
+import co.feip.fefu2025.domain.AnimeRepository
+import co.feip.fefu2025.domain.entities.Anime
+
+class AnimeRepositoryImpl: AnimeRepository {
+
+    override fun getListOfAnime(): List<Anime> = animeList
+
+    override fun getAnime(id: Int): Anime? = animeList[id]
+
     val animeList = listOf(
-        AnimeData(
+        Anime(
             "Форма голоса",
             R.drawable.anime1,
             "8.93",
@@ -19,7 +28,7 @@ object Anime {
             "2016 г.",
             1
         ),
-        AnimeData(
+        Anime(
             "Монстр",
             R.drawable.anime2,
             "8.88",
@@ -40,7 +49,7 @@ object Anime {
             "2004-2005 гг.",
             74
         ),
-        AnimeData(
+        Anime(
             "Психопаспорт",
             R.drawable.anime3,
             "8.33",
@@ -56,7 +65,7 @@ object Anime {
             "2012-2013 гг.",
             22
         ),
-        AnimeData(
+        Anime(
             "Эрго Прокси",
             R.drawable.anime4,
             "7.9",
@@ -68,7 +77,7 @@ object Anime {
             "2006 г.",
             23
         ),
-        AnimeData(
+        Anime(
             "Эксперименты Лэйн",
             R.drawable.anime5,
             "8.09",
@@ -82,7 +91,7 @@ object Anime {
             "1998 г.",
             13
         ),
-        AnimeData(
+        Anime(
             "Бугипоп никогда не смеётся",
             R.drawable.anime6,
             "7.15",
@@ -94,7 +103,7 @@ object Anime {
             "2000 г.",
             12
         ),
-        AnimeData(
+        Anime(
             "Идеальная грусть",
             R.drawable.anime7,
             "8.55",
@@ -109,7 +118,7 @@ object Anime {
             "1998 г.",
             1
         ),
-        AnimeData(
+        Anime(
             "Призрак в доспехах",
             R.drawable.anime8,
             "8.27",
@@ -123,7 +132,7 @@ object Anime {
             1
 
         ),
-        AnimeData(
+        Anime(
             "Технолайз",
             R.drawable.anime9,
             "7.76",
@@ -141,7 +150,7 @@ object Anime {
             "2003 г.",
             22
         ),
-        AnimeData(
+        Anime(
             "Берсерк",
             R.drawable.anime10,
             "8.6",
@@ -157,7 +166,7 @@ object Anime {
             "1997-1998 гг.",
             25
         ),
-        AnimeData(
+        Anime(
             "Ковбой Бибоп",
             R.drawable.anime11,
             "8.75",
@@ -173,7 +182,7 @@ object Anime {
             "1998-1999 гг.",
             26
         ),
-        AnimeData(
+        Anime(
             "Самурай Чамплоу",
             R.drawable.anime12,
             "8.51",
@@ -188,7 +197,7 @@ object Anime {
             "2004-2005 гг.",
             26
         ),
-        AnimeData(
+        Anime(
             "Оглянись",
             R.drawable.anime13,
             "8.64",
@@ -205,7 +214,7 @@ object Anime {
             1
 
         ),
-        AnimeData(
+        Anime(
             "Лиз и синяя птица",
             R.drawable.anime14,
             "8.22",
@@ -221,7 +230,7 @@ object Anime {
             "2018 г.",
             1
         ),
-        AnimeData(
+        Anime(
             "Нана",
             R.drawable.anime15,
             "8.32",
@@ -239,7 +248,7 @@ object Anime {
             "2006-2007 гг.",
             47
         ),
-        AnimeData(
+        Anime(
             "Сказ о четырёх с половиной татами",
             R.drawable.anime16,
             "8.55",
@@ -253,7 +262,7 @@ object Anime {
             "2010 г.",
             11
         ),
-        AnimeData(
+        Anime(
             "Фури-кури",
             R.drawable.anime17,
             "8.04",
@@ -265,7 +274,7 @@ object Anime {
             "2000-2001 гг.",
             6
         ),
-        AnimeData(
+        Anime(
             "Трапеция",
             R.drawable.anime18,
             "7.9",
@@ -278,7 +287,7 @@ object Anime {
             "2009 г.",
             11
         ),
-        AnimeData(
+        Anime(
             "Мелочи жизни",
             R.drawable.anime19,
             "8.47",
@@ -294,7 +303,7 @@ object Anime {
             "2011 г.",
             26
         ),
-        AnimeData(
+        Anime(
             "Мононокэ",
             R.drawable.anime20,
             "8.41",
@@ -310,7 +319,7 @@ object Anime {
             "2007 г.",
             12
         ),
-        AnimeData(
+        Anime(
             "Жозе, тигр и рыба",
             R.drawable.anime21,
             "8.38",
@@ -330,7 +339,7 @@ object Anime {
             "2020 г.",
             1
         ),
-        AnimeData(
+        Anime(
             "Девочка-волшебница Мадока★Волшебство",
             R.drawable.anime22,
             "8.37",
@@ -347,7 +356,7 @@ object Anime {
             12
 
         ),
-        AnimeData(
+        Anime(
             "Великий притворщик",
             R.drawable.anime23,
             "8.2",
@@ -361,7 +370,7 @@ object Anime {
             "2020 г.",
             23
         ),
-        AnimeData(
+        Anime(
             "Парад смерти",
             R.drawable.anime24,
             "8.32",
@@ -377,7 +386,7 @@ object Anime {
             "2015 г.",
             12
         ),
-        AnimeData(
+        Anime(
             "В этом уголке мира",
             R.drawable.anime25,
             "8.22",
@@ -389,7 +398,7 @@ object Anime {
             "2016 г.",
             1
         ),
-        AnimeData(
+        Anime(
             "Дорохедоро",
             R.drawable.anime26,
             "8.05",
@@ -405,7 +414,7 @@ object Anime {
             "2020 г.",
             12
         ),
-        AnimeData(
+        Anime(
             "Цветы зла",
             R.drawable.anime27,
             "7.15",
@@ -422,7 +431,7 @@ object Anime {
             13
 
         ),
-        AnimeData(
+        Anime(
             "Кэйон!",
             R.drawable.anime28,
             "7.86",
@@ -439,7 +448,7 @@ object Anime {
             "2009 г.",
             13
         ),
-        AnimeData(
+        Anime(
             "Райский поцелуй",
             R.drawable.anime29,
             "7.87",
@@ -453,7 +462,7 @@ object Anime {
             "2005 г.",
             12
         ),
-        AnimeData(
+        Anime(
             "91 день",
             R.drawable.anime30,
             "7.83",
@@ -468,13 +477,3 @@ object Anime {
         )
     )
 }
-
-data class AnimeData(
-    val name: String,
-    val imageRes: Int,
-    val rating: String,
-    val genres: List<String>,
-    val description: String,
-    val year: String,
-    val episodes: Int
-)
