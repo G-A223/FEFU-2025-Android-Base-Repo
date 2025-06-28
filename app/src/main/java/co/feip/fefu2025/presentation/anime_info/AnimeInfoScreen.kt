@@ -62,8 +62,6 @@ fun AnimeInfoScreen(
                 ),
                 title = {
                     if (!isLoading || error == null) {
-                        Text("Загрузка...")
-                    } else {
                         Text(text = animeData?.name.toString())
                     }
                 },

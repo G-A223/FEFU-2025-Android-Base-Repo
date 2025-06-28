@@ -37,7 +37,7 @@ class RecommendedViewModel(private val getAnimeListUseCase: GetAnimeListUseCase)
             error.value = null
 
             try {
-                animeList.value = getAnimeListUseCase()
+                animeList.value = getAnimeListUseCase(1)
             } catch (e: Exception) {
                 error.value = "Ошибка загрузки: ${e.message ?: "Неизвестная ошибка"}"
             } finally {

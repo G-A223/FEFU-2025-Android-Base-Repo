@@ -34,7 +34,7 @@ class SearchAnimeViewModel(private val searchAnimeUseCase: SearchAnimeUseCase): 
             _error.value = null
             searchJob = viewModelScope.launch {
                 try {
-                    _searchResults.value = searchAnimeUseCase(query)
+                    _searchResults.value = searchAnimeUseCase(query, 1)
                 } catch (e: Exception) {
                     _error.value = "Ошибка поиска: ${e.message ?: "Неизвестная ошибка"}"
                     _searchResults.value = emptyList()

@@ -16,6 +16,9 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
     private val error = MutableStateFlow<String?>(null)
     val error_public: StateFlow<String?> = error
 
+    private var currentPage = 1
+    private var hasNextPage = true
+
     val animeList = MutableStateFlow<List<Anime>>(emptyList())
 
     init {
@@ -26,13 +29,22 @@ class AnimeListViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) :
         loadAnimeList()
     }
 
+    fun loadMore() {
+        if (!isLoading_public.value && hasNextPage) {
+            loadAnimeList()
+        }
+    }
+
     private fun loadAnimeList() {
         viewModelScope.launch {
             isLoading.value = true
             error.value = null
 
             try {
-                animeList.value = getAnimeListUseCase()
+                val newAnimeList = getAnimeListUseCase(currentPage)
+                animeList.value = animeList.value + newAnimeList
+                currentPage++
+                hasNextPage = newAnimeList.isNotEmpty()
             } catch (e: Exception) {
                 error.value = "Ошибка загрузки: ${e.message ?: "Неизвестная ошибка"}"
             } finally {

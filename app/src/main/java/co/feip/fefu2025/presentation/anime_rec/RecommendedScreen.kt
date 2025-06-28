@@ -78,7 +78,7 @@ fun RecommendedScreen(
             isLoading -> LoadingView()
             error != null -> ErrorView(
                 message = error!!,
-                onRetry = { }
+                onRetry = { viewModel.retry() }
             )
 
             animeData.isEmpty() -> {
@@ -99,7 +99,7 @@ fun RecommendedScreen(
                                 row.forEach { anime ->
                                     AnimeCard(
                                         name = anime.name,
-                                        imageRes = anime.imageRes,
+                                        imageUrl = anime.imageUrl,
                                         rating = anime.rating,
                                         genres = anime.genres,
                                         onClick = { onAnimeClick(anime.id) }

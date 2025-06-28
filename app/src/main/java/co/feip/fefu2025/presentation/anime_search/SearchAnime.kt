@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,6 +44,7 @@ import co.feip.fefu2025.LoadingView
 import co.feip.fefu2025.NoResultsView
 import co.feip.fefu2025.dependency.ProvideSearchAnimeData
 import co.feip.fefu2025.domain.entities.Anime
+import coil.compose.AsyncImage
 
 @Composable
 fun SearchScreen(
@@ -102,11 +105,12 @@ fun AnimeSearchItem(anime: Anime, onClick: () -> Unit) {
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = anime.imageRes),
+        AsyncImage(
+            model = anime.imageUrl,
             contentDescription = null,
-            modifier = Modifier.size(64.dp),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                    .size(64.dp)
         )
         Column(modifier = Modifier.padding(start = 16.dp)) {
             Text(text = anime.name, style = MaterialTheme.typography.titleMedium)
@@ -145,7 +149,7 @@ fun SearchTopBar(
                 },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
-                    onSearch = { /* Дополнительные действия при нажатии поиска */ }
+                    onSearch = { }
                 )
             )
         },

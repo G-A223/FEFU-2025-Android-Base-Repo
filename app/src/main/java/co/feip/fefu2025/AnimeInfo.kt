@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -41,6 +42,7 @@ import co.feip.fefu2025.presentation.anime_info.AnimeInfoViewModel
 import co.feip.fefu2025.presentation.anime_list.AnimeListViewModel
 import co.feip.fefu2025.presentation.anime_list.RecommendedViewModel
 import co.feip.fefu2025.ui.theme.AnimeColors
+import coil.compose.AsyncImage
 
 @Composable
 fun AnimeInfo(
@@ -85,8 +87,8 @@ fun AnimeInfo(
                     .height(550.dp)
 
             ) {
-                Image(
-                    painter = painterResource(id = animeData?.imageRes!!),
+                AsyncImage(
+                    model = animeData?.imageUrl,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -194,7 +196,7 @@ fun AnimeRec(
             items(animeRecommended) { anime ->
                 AnimeCard(
                     name = anime.name,
-                    imageRes = anime.imageRes,
+                    imageUrl = anime.imageUrl,
                     rating = anime.rating,
                     genres = anime.genres,
                     onClick = { onAnimeClick(anime.id) }

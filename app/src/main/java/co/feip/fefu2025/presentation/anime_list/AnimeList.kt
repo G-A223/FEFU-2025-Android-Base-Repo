@@ -41,6 +41,10 @@ import co.feip.fefu2025.ErrorView
 import co.feip.fefu2025.LoadingView
 import co.feip.fefu2025.R
 import co.feip.fefu2025.navigation.Destination
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,6 +61,18 @@ fun AnimeList(
     val rows = remember(animeData) {
         animeData.chunked(2)
     }
+
+    val lazyListState = rememberLazyListState()
+
+    LaunchedEffect(lazyListState) {
+        snapshotFlow { lazyListState.layoutInfo.visibleItemsInfo }
+            .collect {
+                if (it.lastOrNull()?.index == lazyListState.layoutInfo.totalItemsCount - 1) {
+                    viewModel.loadMore()
+                }
+            }
+    }
+
 
     Scaffold(
         topBar = {
@@ -90,22 +106,23 @@ fun AnimeList(
             }
 
             else -> {
-                Column(modifier = Modifier.padding(paddings)) {
-                    LazyColumn {
-                        items(rows) { pair ->
-                            Row(
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                pair.forEach { anime ->
-                                    AnimeCard(
-                                        name = anime.name,
-                                        imageRes = anime.imageRes,
-                                        rating = anime.rating,
-                                        genres = anime.genres,
-                                        onClick = { onAnimeClick(anime.id) }
-                                    )
-                                }
+                LazyColumn(
+                    state = lazyListState,
+                    modifier = Modifier.padding(paddings)
+                ) {
+                    items(rows) { pair ->
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            pair.forEach { anime ->
+                                AnimeCard(
+                                    name = anime.name,
+                                    imageUrl = anime.imageUrl,
+                                    rating = anime.rating,
+                                    genres = anime.genres,
+                                    onClick = { onAnimeClick(anime.id) }
+                                )
                             }
                         }
                     }
