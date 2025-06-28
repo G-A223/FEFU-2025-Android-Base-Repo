@@ -8,8 +8,4 @@ class GetAnimeListUseCase(private val repository: AnimeRepository) {
     suspend operator fun invoke(page: Int): List<Anime> {
         return repository.getListOfAnime(page)
     }
-
-    fun getWithoutSuspend(): List<Anime> {
-        return repository.getListOfAnimeWithoutSuspend()
-    }
 }

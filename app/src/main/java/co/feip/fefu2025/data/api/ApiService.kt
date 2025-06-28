@@ -14,7 +14,7 @@ interface ApiService {
     @GET("v4/anime/{id}")
     suspend fun getAnime(
         @Path("id") id: Int
-    ): AnimeData
+    ): AnimeSingleRepoApi
 
     @GET("v4/anime")
     suspend fun searchAnime(

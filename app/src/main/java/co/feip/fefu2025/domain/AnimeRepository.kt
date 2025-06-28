@@ -9,6 +9,4 @@ interface AnimeRepository {
     suspend fun getAnime(id: Int): Anime?
 
     suspend fun searchAnime(query: String, page: Int): List<Anime>
-
-    fun getListOfAnimeWithoutSuspend(): List<Anime>
 }

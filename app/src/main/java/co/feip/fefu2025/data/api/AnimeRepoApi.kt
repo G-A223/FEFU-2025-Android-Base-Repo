@@ -5,10 +5,14 @@ data class AnimeRepoApi (
     val pagination: Pagination
 )
 
+data class AnimeSingleRepoApi(
+    val data: AnimeData
+)
+
 data class AnimeData(
     val mal_id: Int,
     val title: String,
-    val images: AnimeImages,
+    val images: AnimeImages?,
     val score: Double?,
     val genres: List<Genre>,
     val synopsis: String?,
@@ -17,13 +21,13 @@ data class AnimeData(
 )
 
 data class AnimeImages(
-    val jpg: ImageUrls
+    val jpg: ImageUrls?
 )
 
 data class ImageUrls(
-    val image_url: String,
-    val small_image_url: String,
-    val large_image_url: String
+    val image_url: String?,
+    val small_image_url: String?,
+    val large_image_url: String?
 )
 
 data class Genre(

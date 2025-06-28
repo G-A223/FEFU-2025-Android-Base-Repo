@@ -34,7 +34,13 @@ fun AppNavHost(
             AnimeList(
                 viewModel = viewModel,
                 onAnimeClick = { animeId ->
-                    navHostController.navigate(Destination.AnimeInfo(animeId).route)
+                    val cachedAnime = viewModel.animeList.value.find { it.id == animeId }
+
+                    navHostController.currentBackStackEntry?.savedStateHandle?.set("anime_id", animeId)
+
+                    navHostController.navigate(
+                        Destination.AnimeInfo(animeId).route
+                    )
                 },
                 navController = navHostController
             )
@@ -45,9 +51,11 @@ fun AppNavHost(
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { backStackEntry ->
             val animeId = Destination.AnimeInfo.getId(backStackEntry)
+
             val viewModel: AnimeInfoViewModel = viewModel(
                 factory = ProvideAnimeInfoData.provideAnimeInfoViewModel(animeId)
             )
+
             AnimeInfoScreen(
                 viewModel = viewModel,
                 onBackClick = { navHostController.popBackStack() },

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import co.feip.fefu2025.domain.entities.Anime
 import co.feip.fefu2025.domain.use_cases.SearchAnimeUseCase
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.viewModelScope
