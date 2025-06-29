@@ -19,9 +19,6 @@ class RecommendedViewModel(private val getAnimeListUseCase: GetAnimeListUseCase)
 
     val animeList = MutableStateFlow<List<Anime>>(emptyList())
 
-    fun getWithoutSuspend(): List<Anime> {
-        return getAnimeListUseCase.getWithoutSuspend()
-    }
 
     init {
         loadAnimeList()

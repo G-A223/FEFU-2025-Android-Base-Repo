@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -27,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -54,6 +57,17 @@ fun SearchScreen(
     val isSearching by viewModel.isSearching.collectAsState()
     val error by viewModel.error.collectAsState()
 
+    val lazyListState = rememberLazyListState()
+
+    LaunchedEffect(lazyListState) {
+        snapshotFlow { lazyListState.layoutInfo.visibleItemsInfo }
+            .collect {
+                if (it.lastOrNull()?.index == lazyListState.layoutInfo.totalItemsCount - 1) {
+                    viewModel.loadMoreResults()
+                }
+            }
+    }
+
     LaunchedEffect(query) {
         if (query.isNotEmpty()) {
             viewModel.onSearchQueryChanged(query)
@@ -77,15 +91,22 @@ fun SearchScreen(
                 })
                 searchQuery.isEmpty() -> EmptySearchView()
                 searchResults.isEmpty() -> NoResultsView()
-                else -> SearchResultsList(results = searchResults, onAnimeClick = onAnimeClick)
+                else -> SearchResultsList(
+                    results = searchResults,
+                    onAnimeClick = onAnimeClick,
+                    lazyListState =  lazyListState)
             }
         }
     }
 }
 
 @Composable
-fun SearchResultsList(results: List<Anime>, onAnimeClick: (Int) -> Unit) {
-    LazyColumn {
+fun SearchResultsList(
+    results: List<Anime>,
+    onAnimeClick: (Int) -> Unit,
+    lazyListState: LazyListState
+) {
+    LazyColumn(state = lazyListState) {
         items(results) { anime ->
             AnimeSearchItem(anime = anime, onClick = { onAnimeClick(anime.id) })
         }
@@ -93,7 +114,10 @@ fun SearchResultsList(results: List<Anime>, onAnimeClick: (Int) -> Unit) {
 }
 
 @Composable
-fun AnimeSearchItem(anime: Anime, onClick: () -> Unit) {
+fun AnimeSearchItem(
+    anime: Anime,
+    onClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
