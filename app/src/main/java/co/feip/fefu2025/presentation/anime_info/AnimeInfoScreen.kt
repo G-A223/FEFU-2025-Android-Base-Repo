@@ -48,6 +48,7 @@ fun AnimeInfoScreen(
     val recs = viewModel.recommended.value
     val isLoading by viewModel.isLoading_public.collectAsState()
     val error by viewModel.error_public.collectAsState()
+    val animeId = viewModel.id
 
     LaunchedEffect(Unit) {
         if (animeData == null && !isLoading && error == null) {
@@ -102,7 +103,14 @@ fun AnimeInfoScreen(
                     }
 
                     item {
-                        RatingChart(votes)
+                        if (votes.isNotEmpty())
+                            RatingChart(votes)
+                        else {
+                            Text(
+                                text = "No rating data available",
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
                     }
 
                     item {
@@ -111,12 +119,12 @@ fun AnimeInfoScreen(
                             .padding(16.dp)
                         ) {
                             Text(
-                                text = "Может понравиться",
+                                text = "Recommendations",
                                 textAlign = TextAlign.Start,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 30.sp,
                                 modifier = Modifier.clickable {
-                                    navController.navigate(Destination.Recommended.route)
+                                    navController.navigate(Destination.Recommended(animeId).route)
                                 }
                             )
 

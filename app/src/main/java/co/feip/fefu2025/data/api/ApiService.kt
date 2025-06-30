@@ -22,4 +22,16 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("limit") limit: Int = 20
     ): AnimeRepoApi
+
+    @GET("v4/anime/{id}/recommendations")
+    suspend fun getAnimeRecs(
+        @Path("id") id: Int,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int = 20
+    ): AnimeRecommendations
+
+    @GET("v4/anime/{id}/statistics")
+    suspend fun getAnimeStats(
+        @Path("id") id: Int
+    ): AnimeStats
 }

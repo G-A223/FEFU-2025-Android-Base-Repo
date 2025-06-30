@@ -59,7 +59,7 @@ class SearchAnimeViewModel(private val searchAnimeUseCase: SearchAnimeUseCase): 
                     _searchResults.value + res
                 }
 
-                hasNextPage = res.isEmpty()
+                hasNextPage = res.isNotEmpty()
             } catch (e: Exception) {
                 _error.value = "Ошибка поиска: ${e.message ?: "Неизвестная ошибка"}"
 

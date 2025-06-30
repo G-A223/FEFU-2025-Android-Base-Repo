@@ -12,9 +12,11 @@ import co.feip.fefu2025.presentation.anime_rec.RecommendedScreen
 import co.feip.fefu2025.presentation.anime_info.AnimeInfoScreen
 import co.feip.fefu2025.dependency.ProvideAnimeInfoData
 import co.feip.fefu2025.dependency.ProvideAnimeListData
+import co.feip.fefu2025.dependency.ProvideRecommendedData
 import co.feip.fefu2025.presentation.anime_info.AnimeInfoViewModel
 import co.feip.fefu2025.presentation.anime_list.AnimeList
 import co.feip.fefu2025.presentation.anime_list.AnimeListViewModel
+import co.feip.fefu2025.presentation.anime_list.RecommendedViewModel
 import co.feip.fefu2025.presentation.anime_search.SearchScreen
 
 @Composable
@@ -63,8 +65,18 @@ fun AppNavHost(
             )
         }
 
-        composable(Destination.Recommended.route) {
+        composable(
+            Destination.Recommended.ROUTE_WITH_PLACEHOLDER,
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val animeId = Destination.Recommended.getId(backStackEntry)
+
+            val viewModel: RecommendedViewModel = viewModel(
+                factory = ProvideRecommendedData.provideAnimeRecsViewModel(animeId)
+            )
+
             RecommendedScreen(
+                viewModel = viewModel,
                 onBackClick = { navHostController.popBackStack() },
                 onAnimeClick = { animeId ->
                     navHostController.navigate(Destination.AnimeInfo(animeId).route)

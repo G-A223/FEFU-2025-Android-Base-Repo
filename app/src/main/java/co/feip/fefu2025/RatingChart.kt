@@ -20,15 +20,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Icon
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import co.feip.fefu2025.data.api.ScoreStat
 
 
 @Composable
-fun RatingChart(people: List<Int>) {
+fun RatingChart(ratings: List<ScoreStat>) {
     val colors = listOf(
         Color(0xFFFF0000),
         Color(0xFFFF6F00),
@@ -42,17 +42,11 @@ fun RatingChart(people: List<Int>) {
         Color(0xFF00FF07)
     )
 
-    var sumOfVoters = 0
-    people.forEach { num ->
-        sumOfVoters = sumOfVoters + num
-    }
-
-    var stars = 10
-    var frac = 0.5f
+    val sumOfVoters = ratings.sumOf { it.votes }.toFloat()
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text(
-            text = "Оценки пользователей",
+            text = "User reviews",
             textAlign = TextAlign.Start,
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
@@ -60,8 +54,8 @@ fun RatingChart(people: List<Int>) {
                 .padding(bottom = 10.dp)
         )
 
-        people.forEach { num ->
-            frac = people[stars - 1].toFloat() / sumOfVoters.toFloat()
+        ratings.forEach { stat ->
+            val frac = if (sumOfVoters > 0) stat.votes.toFloat() / sumOfVoters else 0f
 
             Row(modifier = Modifier.fillMaxWidth()) {
                 Box(
@@ -72,7 +66,7 @@ fun RatingChart(people: List<Int>) {
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "$stars",
+                            text = "${stat.score}",
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(end = 4.dp)
@@ -106,7 +100,7 @@ fun RatingChart(people: List<Int>) {
                             .fillMaxWidth(fraction = frac)
                             .fillMaxHeight()
                             .clip(RoundedCornerShape(50.dp))
-                            .background(colors[stars - 1])
+                            .background(colors[stat.score - 1])
                     )
 
                 }
@@ -119,7 +113,7 @@ fun RatingChart(people: List<Int>) {
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "${people[stars - 1]}",
+                            text = "${stat.votes} (${"%.1f".format(stat.percentage)}%)",
                             fontSize = 18.sp,
                             modifier = Modifier
                                 .padding(end = 4.dp)
@@ -127,17 +121,8 @@ fun RatingChart(people: List<Int>) {
                     }
                 }
             }
-
-            stars -= 1
         }
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun ChartPreview() {
-    RatingChart(listOf(100, 345, 121, 208, 99, 134, 54, 1000, 21, 33))
 }
 
 

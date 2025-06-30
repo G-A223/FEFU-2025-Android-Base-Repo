@@ -4,20 +4,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import co.feip.fefu2025.data.AnimeRepositoryImpl
 import co.feip.fefu2025.domain.AnimeRepository
-import co.feip.fefu2025.domain.use_cases.GetAnimeListUseCase
+import co.feip.fefu2025.domain.use_cases.GetAnimeRecsUseCase
 import co.feip.fefu2025.presentation.anime_list.RecommendedViewModel
 
 object ProvideRecommendedData {
-    fun provideAnimeListRepository(): AnimeRepository = AnimeRepositoryImpl()
+    fun provideAnimeRecsRepository(): AnimeRepository = AnimeRepositoryImpl()
 
-    fun provideGetAnimeListUseCase(): GetAnimeListUseCase {
-        return GetAnimeListUseCase(provideAnimeListRepository())
+    fun provideGetAnimeRecsUseCase(): GetAnimeRecsUseCase {
+        return GetAnimeRecsUseCase(provideAnimeRecsRepository())
     }
 
-    fun provideAnimeListViewModel(): ViewModelProvider.Factory {
+    fun provideAnimeRecsViewModel(id: Int): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return RecommendedViewModel(provideGetAnimeListUseCase()) as T
+                return RecommendedViewModel(
+                    provideGetAnimeRecsUseCase(),
+                    id
+                ) as T
             }
         }
     }
