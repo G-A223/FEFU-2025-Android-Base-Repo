@@ -15,40 +15,31 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.lifecycle.viewmodel.compose.viewModel
 import co.feip.fefu2025.AnimeCard
 import co.feip.fefu2025.ErrorView
 import co.feip.fefu2025.LoadingView
-import co.feip.fefu2025.dependency.ProvideAnimeListData
-import co.feip.fefu2025.dependency.ProvideRecommendedData
-import co.feip.fefu2025.presentation.anime_list.AnimeListViewModel
 import co.feip.fefu2025.presentation.anime_list.RecommendedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecommendedScreen(
+    viewModel: RecommendedViewModel,
     onBackClick: () -> Unit,
     onAnimeClick: (Int) -> Unit
 ) {
-    val viewModel: RecommendedViewModel = viewModel(
-        factory = ProvideRecommendedData.provideAnimeListViewModel()
-    )
-
     val animeData by viewModel.animeList.collectAsState()
     val recommendedAnime = remember(animeData) {
-        if (animeData.isNotEmpty()) animeData.shuffled().take(10) else emptyList()
+        if (animeData.isNotEmpty()) animeData else emptyList()
     }
     val isLoading by viewModel.isLoading_public.collectAsState()
     val error by viewModel.error_public.collectAsState()
@@ -78,7 +69,7 @@ fun RecommendedScreen(
             isLoading -> LoadingView()
             error != null -> ErrorView(
                 message = error!!,
-                onRetry = { }
+                onRetry = { viewModel.retry() }
             )
 
             animeData.isEmpty() -> {
@@ -99,7 +90,7 @@ fun RecommendedScreen(
                                 row.forEach { anime ->
                                     AnimeCard(
                                         name = anime.name,
-                                        imageRes = anime.imageRes,
+                                        imageUrl = anime.imageUrl,
                                         rating = anime.rating,
                                         genres = anime.genres,
                                         onClick = { onAnimeClick(anime.id) }

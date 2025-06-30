@@ -1,6 +1,5 @@
 package co.feip.fefu2025
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,22 +15,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Surface
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.tooling.preview.Preview
 import co.feip.fefu2025.ui.theme.AnimeColors
-import co.feip.fefu2025.ui.theme.FEFU2025AndroidBaseRepoTheme
+import coil.compose.AsyncImage
 
 
 @Composable
 fun AnimeCard(
     name: String,
-    imageRes: Int,
+    imageUrl: String,
     rating: String,
     genres: List<String>,
     onClick: () -> Unit,
@@ -50,12 +47,13 @@ fun AnimeCard(
                     .height(250.dp)
 
             ) {
-                Image(
-                    painter = painterResource(id = imageRes),
+                AsyncImage(
+                    model = imageUrl,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxHeight()
+                        .height(250.dp)
                 )
 
                 RatingView(
@@ -123,20 +121,5 @@ fun GenreRow(genres: List<String>) {
                 modifier = Modifier.padding(start = 4.dp)
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AnimeCardPreview() {
-    FEFU2025AndroidBaseRepoTheme {
-        AnimeCard(
-            name = "Берсерк",
-            imageRes = R.drawable.anime10,
-            rating = "9.8",
-            genres = listOf("Драма", "Приключения", "Экшен"),
-            onClick = {},
-            modifier = Modifier.padding(16.dp)
-        )
     }
 }

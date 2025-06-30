@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import co.feip.fefu2025.domain.entities.Anime
 import co.feip.fefu2025.domain.use_cases.SearchAnimeUseCase
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.viewModelScope
@@ -24,26 +23,51 @@ class SearchAnimeViewModel(private val searchAnimeUseCase: SearchAnimeUseCase): 
     val error: StateFlow<String?> = _error
 
     private var searchJob: Job? = null
+    private var currentPage = 1
+    private var hasNextPage = true
+
+    fun loadMoreResults() {
+        if (!_isSearching.value && hasNextPage) {
+            currentPage++
+            performSearch()
+        }
+    }
 
     fun onSearchQueryChanged(query: String) {
         _searchQuery.value = query
         searchJob?.cancel()
+        currentPage = 1
+        hasNextPage = true
 
         if (query.isNotEmpty()) {
-            _isSearching.value = true
-            _error.value = null
-            searchJob = viewModelScope.launch {
-                try {
-                    _searchResults.value = searchAnimeUseCase(query)
-                } catch (e: Exception) {
-                    _error.value = "Ошибка поиска: ${e.message ?: "Неизвестная ошибка"}"
-                    _searchResults.value = emptyList()
-                } finally {
-                    _isSearching.value = false
-                }
-            }
+            performSearch()
         } else {
             _searchResults.value = emptyList()
+        }
+    }
+
+    private fun performSearch() {
+        _isSearching.value = true
+        _error.value = null
+        searchJob = viewModelScope.launch {
+            try {
+                val res = searchAnimeUseCase(_searchQuery.value, currentPage)
+
+                _searchResults.value = if (currentPage == 1) {
+                    res
+                } else {
+                    _searchResults.value + res
+                }
+
+                hasNextPage = res.isNotEmpty()
+            } catch (e: Exception) {
+                _error.value = "Ошибка поиска: ${e.message ?: "Неизвестная ошибка"}"
+
+                if (currentPage > 1)
+                    currentPage--
+            } finally {
+                _isSearching.value = false
+            }
         }
     }
 }

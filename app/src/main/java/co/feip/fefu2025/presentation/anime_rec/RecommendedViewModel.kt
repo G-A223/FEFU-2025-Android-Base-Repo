@@ -1,15 +1,19 @@
 package co.feip.fefu2025.presentation.anime_list
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import co.feip.fefu2025.domain.entities.Anime
-import co.feip.fefu2025.domain.use_cases.GetAnimeListUseCase
+import co.feip.fefu2025.domain.use_cases.GetAnimeRecsUseCase
 import kotlinx.coroutines.flow.StateFlow
 
 
-class RecommendedViewModel(private val getAnimeListUseCase: GetAnimeListUseCase) : ViewModel() {
+class RecommendedViewModel(
+    private val getAnimeRecsUseCase: GetAnimeRecsUseCase,
+    val id: Int
+) : ViewModel() {
 
     private val isLoading = MutableStateFlow(false)
     val isLoading_public: StateFlow<Boolean> = isLoading
@@ -19,9 +23,9 @@ class RecommendedViewModel(private val getAnimeListUseCase: GetAnimeListUseCase)
 
     val animeList = MutableStateFlow<List<Anime>>(emptyList())
 
-    fun getWithoutSuspend(): List<Anime> {
-        return getAnimeListUseCase.getWithoutSuspend()
-    }
+    private var currentPage = 1
+    private var hasNextPage = true
+
 
     init {
         loadAnimeList()
@@ -31,15 +35,23 @@ class RecommendedViewModel(private val getAnimeListUseCase: GetAnimeListUseCase)
         loadAnimeList()
     }
 
+
     private fun loadAnimeList() {
         viewModelScope.launch {
             isLoading.value = true
             error.value = null
 
             try {
-                animeList.value = getAnimeListUseCase()
+                val newAnimeRecs = getAnimeRecsUseCase(id, currentPage)
+                animeList.value = animeList.value + newAnimeRecs
+                currentPage++
+                hasNextPage = newAnimeRecs.isNotEmpty()
+                Log.d("RecommendedScreen", "Рекомендации загружены")
             } catch (e: Exception) {
                 error.value = "Ошибка загрузки: ${e.message ?: "Неизвестная ошибка"}"
+
+                if (currentPage > 1)
+                    currentPage--
             } finally {
                 isLoading.value = false
             }
